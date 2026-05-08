@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Check, ExternalLink, Sparkles, Globe } from "lucide-react";
+import { Check, ExternalLink, Sparkles, Globe, Zap } from "lucide-react";
 import { useTranslations } from "@/i18n/compat/client";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -179,7 +179,7 @@ const AISettingsPage = () => {
       id: "xiaomi",
       name: t("dashboard.settings.ai.xiaomi.title"),
       description: t("dashboard.settings.ai.xiaomi.description"),
-      icon: Sparkles,
+      icon: Zap,
       link: "https://platform.xiaomi.com",
       color: "text-orange-500",
       bgColor: "bg-orange-50 dark:bg-orange-950/50",

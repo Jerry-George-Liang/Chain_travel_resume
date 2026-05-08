@@ -29,9 +29,29 @@
     "hero": {
       "badge": "Smart Resume Creation",
       "title": "Make Resume Creation Simple and Smart",
+      "titleLine1": "Resume Made Simple",
+      "titleLine2": "Smart & Efficient",
       "subtitle": "链途resume uses AI technology to help you quickly create professional resumes. No registration required, free to use, with secure data storage.",
-      "cta": "Get Started",
-      "secondary": "Browse Templates"
+      "cta": "Try It Now",
+      "secondary": "Browse Templates",
+      "cards": {
+        "ai": {
+          "title": "AI Powered",
+          "description": "Smart Technology"
+        },
+        "fast": {
+          "title": "Quick Create",
+          "description": "Fast & Easy"
+        },
+        "free": {
+          "title": "Free to Use",
+          "description": "No Registration"
+        },
+        "secure": {
+          "title": "Data Secure",
+          "description": "Local Storage"
+        }
+      }
     },
     "features": {
       "title": "Why Choose 链途resume?",

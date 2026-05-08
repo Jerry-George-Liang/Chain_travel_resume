@@ -32,7 +32,7 @@ export default function LandingHeader() {
                 <Logo size={60} />
                 <div className="absolute inset-0 bg-gradient-to-br from-amber-400/20 to-orange-500/10 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
-              <span className="font-serif text-[24px] tracking-tight font-semibold text-foreground/90 ml-2 group-hover:text-foreground transition-colors">
+              <span className="font-serif text-[24px] tracking-tight font-bold ml-2 bg-gradient-to-r from-violet-500 via-purple-500 to-cyan-400 bg-clip-text text-transparent group-hover:from-violet-400 group-hover:via-purple-400 group-hover:to-cyan-300 transition-all duration-300">
                 {t("header.title")}
               </span>
             </div>

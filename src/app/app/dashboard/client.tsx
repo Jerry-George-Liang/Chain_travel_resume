@@ -95,7 +95,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
                 size={48}
               />
               {open && (
-                <span className="font-bold text-lg tracking-tight">
+                <span className="font-bold text-lg tracking-tight bg-gradient-to-r from-violet-500 via-purple-500 to-cyan-400 bg-clip-text text-transparent">
                   {t("sidebar.appName")}
                 </span>
               )}

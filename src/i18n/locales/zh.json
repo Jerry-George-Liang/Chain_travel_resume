@@ -29,9 +29,29 @@
     "hero": {
       "badge": "免费简历制作",
       "title": "让简历制作变得简单而智能",
+      "titleLine1": "简历制作如此简单",
+      "titleLine2": "智能高效",
       "subtitle": "链途resume利用 AI 技术，帮助您快速创建专业的简历。无需注册，免费使用，数据安全存储。",
-      "cta": "立即开始",
-      "secondary": "浏览模板"
+      "cta": "立即体验",
+      "secondary": "浏览模板",
+      "cards": {
+        "ai": {
+          "title": "AI 驱动",
+          "description": "智能技术"
+        },
+        "fast": {
+          "title": "快速创建",
+          "description": "高效便捷"
+        },
+        "free": {
+          "title": "免费使用",
+          "description": "无需注册"
+        },
+        "secure": {
+          "title": "数据安全",
+          "description": "本地存储"
+        }
+      }
     },
     "features": {
       "title": "为什么选择链途resume？",

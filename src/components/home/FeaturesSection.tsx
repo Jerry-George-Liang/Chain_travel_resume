@@ -3,6 +3,7 @@ import { useTranslations } from "@/i18n/compat/client";
 import Image from "@/lib/image";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { ChevronRight, Sparkles, Shield, Zap, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 import AnimatedFeature from "./client/AnimatedFeature";
 
 const features = [
@@ -225,14 +226,58 @@ export default function FeaturesSection() {
               {/* Image Side */}
               <div className="w-full lg:w-7/12">
                 <AnimatedFeature key={`${catIndex}-${activeFeatures[catIndex]}`} delay={0.2}>
-                  <div className={`relative aspect-[16/10] rounded-3xl border border-border/40 p-6 sm:p-10 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.08)] backdrop-blur-sm group overflow-hidden bg-gradient-to-br ${category.gradientFrom} ${category.gradientTo}`}>
+                  <motion.div
+                    className={`relative aspect-[16/10] rounded-3xl border border-border/40 p-6 sm:p-10 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.08)] backdrop-blur-sm group overflow-hidden bg-gradient-to-br ${category.gradientFrom} ${category.gradientTo}`}
+                    style={{ willChange: "transform" }}
+                    animate={{
+                      y: [0, -8, 0],
+                    }}
+                    transition={{
+                      duration: 4,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                    whileHover={{
+                      y: -12,
+                      scale: 1.02,
+                      boxShadow: "0_30px_80px_-15px_rgba(0,0,0,0.15), 0_0_40px rgba(139,92,246,0.1)",
+                    }}
+                  >
+                    {/* Animated glow ring */}
+                    <motion.div
+                      className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                      style={{
+                        background: `linear-gradient(135deg, ${category.hoverGlow || 'rgba(139,92,246,0.15)'} 0%, transparent 50%, ${category.hoverGlow2 || 'rgba(59,130,246,0.1)'} 100%)`,
+                      }}
+                      animate={{
+                        opacity: [0, 0.5, 0],
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                    />
+
                     {/* Subtle inner glow */}
                     <div className="absolute inset-0 bg-gradient-to-tr from-white/[0.03] to-transparent pointer-events-none" />
 
                     {/* Corner accent */}
                     <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary/[0.02] to-transparent rounded-bl-full" />
 
-                    <div className="relative w-full h-full transform group-hover:scale-[1.01] transition-transform duration-700 ease-out">
+                    {/* Floating image container */}
+                    <motion.div
+                      className="relative w-full h-full"
+                      animate={{
+                        y: [0, -4, 0],
+                      }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        delay: 0.5,
+                      }}
+                    >
                       <Image
                         src={category.items[activeFeatures[catIndex]].image}
                         alt={t(category.items[activeFeatures[catIndex]].title)}
@@ -240,11 +285,37 @@ export default function FeaturesSection() {
                         className="object-contain drop-shadow-sm"
                         sizes="(max-width: 1024px) 100vw, 40vw"
                       />
-                    </div>
+                    </motion.div>
+
+                    {/* Shimmer effect on hover */}
+                    <motion.div
+                      className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl"
+                    >
+                      <motion.div
+                        className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.08] to-transparent"
+                        initial={{ x: "-100%" }}
+                        whileHover={{ x: "100%" }}
+                        transition={{ duration: 1.2, ease: "easeInOut" }}
+                      />
+                    </motion.div>
 
                     {/* Bottom reflection */}
                     <div className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-foreground/[0.015] to-transparent rounded-b-3xl pointer-events-none" />
-                  </div>
+
+                    {/* Ambient light spots */}
+                    <motion.div
+                      className="absolute top-1/4 left-1/4 w-20 h-20 bg-gradient-to-br from-violet-400/10 to-transparent rounded-full blur-xl"
+                      animate={{
+                        scale: [1, 1.3, 1],
+                        opacity: [0.3, 0.6, 0.3],
+                      }}
+                      transition={{
+                        duration: 4,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                    />
+                  </motion.div>
                 </AnimatedFeature>
               </div>
             </div>
