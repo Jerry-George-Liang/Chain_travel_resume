@@ -4,6 +4,7 @@ import viteReact from "@vitejs/plugin-react";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
+  base: "/magic-resume/",
   server: {
     port: 3010,
     strictPort: true,
