@@ -1,8 +1,8 @@
 {
   "common": {
-    "title": "Magic Resume",
+    "title": "链途resume",
     "subtitle": "AI Driven Resume Editor",
-    "description": "Magic Resume is an open source resume editor, free, privacy-first. No registration required, all data stored locally, support data backup and export, ensuring your resume data is always available.",
+    "description": "链途resume is an open source resume editor, free, privacy-first. No registration required, all data stored locally, support data backup and export, ensuring your resume data is always available.",
     "dashboard": "Dashboard",
     "edit": "Edit",
     "delete": "Delete",
@@ -17,7 +17,7 @@
   },
   "home": {
     "header": {
-      "title": "Magic Resume",
+      "title": "链途resume",
       "startButton": "Get Started",
       "features": "Features",
       "pricing": "Pricing",
@@ -29,12 +29,12 @@
     "hero": {
       "badge": "Smart Resume Creation",
       "title": "Make Resume Creation Simple and Smart",
-      "subtitle": "Magic Resume uses AI technology to help you quickly create professional resumes. No registration required, free to use, with secure data storage.",
+      "subtitle": "链途resume uses AI technology to help you quickly create professional resumes. No registration required, free to use, with secure data storage.",
       "cta": "Get Started",
       "secondary": "Browse Templates"
     },
     "features": {
-      "title": "Why Choose Magic Resume?",
+      "title": "Why Choose 链途resume?",
       "subtitle": "We provide an all-in-one resume solution to make your job search journey smoother",
       "ai": {
         "badge": "AI Smart Check",
@@ -53,7 +53,8 @@
         "item1_description": "Resume data securely stored on your computer's hard drive",
         "item2": "Multiple export formats",
         "item2_description": "Support PDF and JSON format export",
-        "item3": "Support data export backup"
+        "item3": "Local AI Support",
+        "item3_description": "Compatible with GLM, Kimi, Ollama and other locally or privately deployed AI models"
       },
       "preview": {
         "badge": "Real-time Preview",
@@ -67,24 +68,24 @@
       "content": "New AI Resume Enhancement Feature is Live"
     },
     "footer": {
-      "copyright": " 2025 Magic Resume. All rights reserved."
+      "copyright": " 2025 链途resume. All rights reserved."
     },
     "changelog": "Changelog",
     "cta": {
       "title": "Start Your New Career Chapter",
-      "description": "Start using Magic Resume now to create an impressive resume",
+      "description": "Start using 链途resume now to create an impressive resume",
       "button": "Start Using for Free"
     },
     "faq": {
       "title": "Frequently Asked Questions",
       "items": [
         {
-          "question": "Is Magic Resume free to use?",
-          "answer": "Magic Resume is currently free, meeting basic resume creation needs. The open-source version's features will remain unchanged"
+          "question": "Is 链途resume free to use?",
+          "answer": "链途resume is currently free, meeting basic resume creation needs. The open-source version's features will remain unchanged"
         },
         {
           "question": "Is my resume data secure?",
-          "answer": "Yes, very secure. Magic Resume uses local storage, meaning all your data is stored on your own device with no cloud storage, ensuring complete privacy protection."
+          "answer": "Yes, very secure. 链途resume uses local storage, meaning all your data is stored on your own device with no cloud storage, ensuring complete privacy protection."
         },
         {
           "question": "What export formats are supported?",
@@ -103,7 +104,7 @@
   },
   "dashboard": {
     "sidebar": {
-      "appName": "Magic Resume",
+      "appName": "链途resume",
       "resumes": "Resumes",
       "settings": "Settings",
       "templates": "Templates",
@@ -126,11 +127,13 @@
         "jsonTitle": "Import JSON",
         "jsonDescription": "Import an exported resume config file (.json)",
         "pdfTitle": "Import PDF",
-        "pdfDescription": "Use Gemini into structured resume data",
+        "pdfDescription": "Use AI to extract structured resume data",
+        "currentModel": "Current: {model}",
         "importing": "Importing, please wait...",
-        "geminiConfigRequired": "Please configure Gemini API Key and Model ID in AI settings first",
+        "aiConfigRequired": "Please configure API Key and Model ID in AI settings first",
+        "modelNotSupportImages": "The selected model does not support image recognition. Please switch to Gemini, OpenAI, or Xiaomi MiMo and try again",
         "pdfSuccess": "PDF imported successfully",
-        "pdfError": "PDF import failed. Please check PDF content or Gemini configuration"
+        "pdfError": "PDF import failed. Please check PDF content or AI configuration"
       },
       "notice": {
         "title": "Attention",
@@ -187,29 +190,60 @@
         "currentModel": "Current Model",
         "selectModel": "Select Model",
         "getApiKey": "Get API Key",
+        "optional": "Optional",
         "doubao": {
           "title": "Doubao",
           "description": "Get API key from Volcengine",
           "apiKey": "Doubao API Key",
-          "modelId": "Model ID"
+          "modelId": "Model ID",
+          "apiEndpoint": "Custom API Endpoint",
+          "apiEndpointPlaceholder": "https://your-proxy.com/v1 (leave empty for official)",
+          "apiEndpointHint": "Leave empty to use the official API address. Supports proxies, relays, and non-official addresses."
         },
         "deepseek": {
           "title": "DeepSeek",
-          "description": "Get API key from DeepSeek Platform",
-          "apiKey": "DeepSeek API Key"
+          "description": "Get API key from DeepSeek Platform or compatible providers",
+          "apiKey": "DeepSeek API Key",
+          "modelId": "Model ID",
+          "apiEndpoint": "Custom API Endpoint",
+          "apiEndpointPlaceholder": "https://your-proxy.com/v1 (leave empty for official)",
+          "apiEndpointHint": "Leave empty to use the official API. Common models: deepseek-chat, deepseek-v4-pro, deepseek-v4-flash, deepseek-reasoner"
         },
         "openai": {
           "title": "OpenAI",
           "description": "Obtain the API key at OpenAI or an open platform compatible with the OpenAI format",
           "apiKey": "OpenAI API Key",
           "modelId": "Model ID",
-          "apiEndpoint": "API Endpoint, example: https://openai.example.org/v1"
+          "apiEndpoint": "API Endpoint",
+          "apiEndpointPlaceholder": "https://api.openai.com/v1",
+          "apiEndpointHint": "Required. Supports OpenAI official and all third-party services with compatible format (Azure, relays, etc.)."
         },
         "gemini": {
           "title": "Gemini",
           "description": "Supports polish, grammar check, and PDF image resume import. Recommended model: gemini-flash-latest",
           "apiKey": "Gemini API Key",
-          "modelId": "Gemini Model ID"
+          "modelId": "Gemini Model ID",
+          "apiEndpoint": "Custom API Endpoint",
+          "apiEndpointPlaceholder": "https://your-gemini-proxy.com (leave empty for official)",
+          "apiEndpointHint": "Leave empty to use Google's official API address. Fill in the full base URL if using a proxy."
+        },
+        "xiaomi": {
+          "title": "Xiaomi MiMo",
+          "description": "Supports multimodal (image + text), recommended for PDF import and vision tasks",
+          "apiKey": "API Key",
+          "modelId": "Model ID",
+          "apiEndpoint": "Custom API Endpoint",
+          "apiEndpointPlaceholder": "https://your-proxy.com/v1 (leave empty for official)",
+          "apiEndpointHint": "Leave empty for official API (https://api.xiaomimimo.com). Recommended vision model: mimo-v2-omni"
+        },
+        "custom": {
+          "title": "Custom",
+          "description": "Support GLM, Kimi, Ollama, or any OpenAI-compatible third-party model",
+          "apiKey": "API Key",
+          "modelId": "Model Name/ID",
+          "apiEndpoint": "API Endpoint URL",
+          "apiEndpointPlaceholder": "https://api.example.com/v1",
+          "apiEndpointHint": "Required. Supports any OpenAI Chat Completions compatible API (e.g., Zhipu GLM, Moonshot Kimi, local Ollama at http://localhost:11434/v1, etc.)."
         }
       }
     },
@@ -701,7 +735,9 @@
     "description": {
       "ready": "Add optional instructions, then click \"Start polish\"",
       "polishing": "Polishing your content...",
-      "finished": "Content has been optimized, please check the result"
+      "finished": "Content has been optimized, please check the result",
+      "skillsDetected": "\"Professional Skills\" detected, will optimize with concise & categorized style",
+      "projectDetected": "\"Project Experience\" detected, will optimize with senior technical resume expert style"
     },
     "error": {
       "configRequired": "Please configure AI model first",
@@ -795,7 +831,7 @@
   },
   "faqDialog": {
     "title": "Frequently Asked Questions (FAQ)",
-    "description": "Common tips and solutions for the Magic Resume workbench.",
+    "description": "Common tips and solutions for the 链途resume workbench.",
     "items": {
       "browser-compatibility": {
         "question": "Which browser is recommended?",

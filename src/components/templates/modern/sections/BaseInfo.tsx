@@ -79,21 +79,22 @@ const BaseInfo = ({ basic = {} as BasicInfo, globalSettings, template }: BaseInf
                         const customFieldHref = item.custom && "href" in item && typeof item.href === "string" ? item.href : null;
 
                         return (
-                        <motion.div key={item.key} className="flex items-center whitespace-nowrap overflow-hidden text-baseFont" style={{ width: "100%", color: "#fff" }}>
-                            {useIconMode ? (
-                                <div className="flex items-center gap-1" style={{ color: "#fff" }}>
-                                    {getIcon(item.icon)}
-                                    {item.key === "email" ? <a href={`mailto:${item.value}`} className="underline" style={{ color: "#fff" }}>{item.value}</a> : customFieldHref ? <a href={customFieldHref} target="_blank" rel="noopener noreferrer" className="underline truncate" style={{ color: "#fff" }}>{item.value}</a> : <span style={{ color: "#fff" }}>{item.value}</span>}
-                                </div>
-                            ) : (
-                                <div className="flex items-center gap-2 overflow-hidden" style={{ color: "#fff" }}>
-                                    {!item.custom && <span style={{ color: "#fff" }}>{t(`basicPanel.basicFields.${item.key}`)}:</span>}
-                                    {item.custom && shouldShowCustomFieldLabelPrefix(item) && <span style={{ color: "#fff" }}>{item.label}:</span>}
-                                    {customFieldHref ? <a href={customFieldHref} target="_blank" rel="noopener noreferrer" className="truncate underline" suppressHydrationWarning style={{ color: "#fff" }}>{item.value}</a> : <span className="truncate" suppressHydrationWarning style={{ color: "#fff" }}>{item.value}</span>}
-                                </div>
-                            )}
-                        </motion.div>
-                    )})}
+                            <motion.div key={item.key} className="text-baseFont w-full" style={{ color: "#fff" }}>
+                                {useIconMode ? (
+                                    <div className="flex items-start gap-1">
+                                        <div className="shrink-0 mt-0.5">{getIcon(item.icon)}</div>
+                                        {item.key === "email" ? <a href={`mailto:${item.value}`} className="underline break-words" style={{ color: "#fff" }}>{item.value}</a> : customFieldHref ? <a href={customFieldHref} target="_blank" rel="noopener noreferrer" className="underline break-words" style={{ color: "#fff" }}>{item.value}</a> : <span className="break-words" style={{ color: "#fff" }}>{item.value}</span>}
+                                    </div>
+                                ) : (
+                                    <div className="flex items-start gap-2">
+                                        {!item.custom && <span className="shrink-0" style={{ color: "#fff" }}>{t(`basicPanel.basicFields.${item.key}`)}:</span>}
+                                        {item.custom && shouldShowCustomFieldLabelPrefix(item) && <span className="shrink-0" style={{ color: "#fff" }}>{item.label}:</span>}
+                                        {customFieldHref ? <a href={customFieldHref} target="_blank" rel="noopener noreferrer" className="underline break-words" suppressHydrationWarning style={{ color: "#fff" }}>{item.value}</a> : <span className="break-words" suppressHydrationWarning style={{ color: "#fff" }}>{item.value}</span>}
+                                    </div>
+                                )}
+                            </motion.div>
+                        )
+                    })}
                 </motion.div>
             </div>
         </SectionWrapper>

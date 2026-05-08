@@ -1,0 +1,102 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    @keyframes pulse-glow {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.05); }
+    }
+    @keyframes brain-wave {
+      0%, 100% { transform: translateY(0); }
+      25% { transform: translateY(-3px); }
+      75% { transform: translateY(2px); }
+    }
+    @keyframes circuit-flow {
+      0% { stroke-dashoffset: 200; }
+      100% { stroke-dashoffset: 0; }
+    }
+    @keyframes dot-pulse {
+      0%, 100% { r: 3; opacity: 1; }
+      50% { r: 5; opacity: 0.6; }
+    }
+    .glow-anim { animation: pulse-glow 3s infinite ease-in-out; transform-origin: center; }
+    .brain-anim { animation: brain-wave 2s infinite ease-in-out; }
+    .circuit-anim { animation: circuit-flow 4s infinite linear; stroke-dasharray: 20 10; }
+    .dot-anim { animation: dot-pulse 2s infinite ease-in-out; }
+  </style>
+
+  <!-- Background Grid Pattern -->
+  <pattern id="ai-grid" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+    <path d="M30 0L0 0 0 30" fill="none" stroke="#1B1B18" stroke-opacity="0.05" stroke-width="1"/>
+  </pattern>
+  <rect x="0" y="0" width="400" height="300" fill="url(#ai-grid)" opacity="0.5"/>
+
+  <!-- Central Computer/Monitor -->
+  <g transform="translate(140, 80)">
+    <!-- Monitor Screen -->
+    <rect x="0" y="0" width="120" height="85" rx="8" fill="#F9F9F7" stroke="#1B1B18" stroke-width="2"/>
+    
+    <!-- Screen Content - AI Brain Icon -->
+    <g class="brain-anim">
+      <circle cx="60" cy="42" r="25" fill="none" stroke="#1B1B18" stroke-width="2" stroke-opacity="0.2"/>
+      <path d="M45 35 Q50 28 60 32 Q70 28 75 35" stroke="#1B1B18" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M48 45 Q55 52 60 48 Q65 52 72 45" stroke="#1B1B18" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <circle cx="53" cy="38" r="2.5" fill="#1B1B18"/>
+      <circle cx="67" cy="38" r="2.5" fill="#1B1B18"/>
+      <circle cx="60" cy="48" r="2" fill="#1B1B18"/>
+    </g>
+
+    <!-- Code Lines on Screen -->
+    <rect x="15" y="58" width="40" height="3" rx="1.5" fill="#1B1B18" fill-opacity="0.15"/>
+    <rect x="15" y="65" width="55" height="3" rx="1.5" fill="#1B1B18" fill-opacity="0.1"/>
+    <rect x="15" y="72" width="30" height="3" rx="1.5" fill="#1B1B18" fill-opacity="0.08"/>
+
+    <!-- Monitor Stand -->
+    <rect x="50" y="85" width="20" height="12" fill="#1B1B18" fill-opacity="0.1"/>
+    <rect x="35" y="97" width="50" height="5" rx="2.5" fill="#1B1B18" fill-opacity="0.15"/>
+  </g>
+
+  <!-- Glow Effect Behind -->
+  <ellipse cx="200" cy="130" rx="90" ry="70" fill="#10B981" fill-opacity="0.08" class="glow-anim"/>
+
+  <!-- Connection Lines (Local to AI) -->
+  <g class="circuit-anim">
+    <!-- Left Circuit -->
+    <path d="M100 140 Q80 160 100 180 T100 220" stroke="#10B981" stroke-width="2" fill="none" stroke-linecap="round" stroke-opacity="0.4"/>
+    <!-- Right Circuit -->
+    <path d="M300 140 Q320 160 300 180 T300 220" stroke="#10B981" stroke-width="2" fill="none" stroke-linecap="round" stroke-opacity="0.4"/>
+  </g>
+
+  <!-- Local Server/Device Icons -->
+  <g transform="translate(70, 195)">
+    <rect x="0" y="0" width="50" height="40" rx="6" fill="#F9F9F7" stroke="#1B1B18" stroke-width="1.5" stroke-opacity="0.3"/>
+    <rect x="8" y="8" width="34" height="24" rx="2" fill="#1B1B18" fill-opacity="0.08"/>
+    <circle cx="14" cy="20" r="2" fill="#10B981" fill-opacity="0.6" class="dot-anim"/>
+    <circle cx="25" cy="20" r="2" fill="#10B981" fill-opacity="0.6" class="dot-anim" style="animation-delay: 0.3s"/>
+    <circle cx="36" cy="20" r="2" fill="#10B981" fill-opacity="0.6" class="dot-anim" style="animation-delay: 0.6s"/>
+  </g>
+
+  <g transform="translate(280, 195)">
+    <rect x="0" y="0" width="50" height="40" rx="6" fill="#F9F9F7" stroke="#1B1B18" stroke-width="1.5" stroke-opacity="0.3"/>
+    <rect x="8" y="8" width="34" height="24" rx="2" fill="#1B1B18" fill-opacity="0.08"/>
+    <circle cx="14" cy="20" r="2" fill="#10B981" fill-opacity="0.6" class="dot-anim" style="animation-delay: 0.9s"/>
+    <circle cx="25" cy="20" r="2" fill="#10B981" fill-opacity="0.6" class="dot-anim" style="animation-delay: 1.2s"/>
+    <circle cx="36" cy="20" r="2" fill="#10B981" fill-opacity="0.6" class="dot-anim" style="animation-delay: 1.5s"/>
+  </g>
+
+  <!-- Floating AI Elements -->
+  <g transform="translate(95, 95)" class="brain-anim" style="animation-delay: 0.5s;">
+    <circle cx="0" cy="0" r="12" fill="#10B981" fill-opacity="0.1" stroke="#10B981" stroke-width="1.5" stroke-opacity="0.3"/>
+    <text x="0" y="4" font-family="sans-serif" font-size="10" fill="#10B981" text-anchor="middle" font-weight="600">AI</text>
+  </g>
+
+  <g transform="translate(305, 105)" class="brain-anim" style="animation-delay: 1s;">
+    <circle cx="0" cy="0" r="10" fill="#10B981" fill-opacity="0.1" stroke="#10B981" stroke-width="1.5" stroke-opacity="0.3"/>
+    <path d="M-4 -2 L0 -5 L4 -2 M-4 2 L0 5 L4 2" stroke="#10B981" stroke-width="1.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- "LOCAL AI" Label -->
+  <g transform="translate(150, 260)">
+    <rect x="0" y="0" width="100" height="22" rx="11" fill="#10B981" fill-opacity="0.08"/>
+    <text x="50" y="15" font-family="sans-serif" font-size="9" fill="#10B981" text-anchor="middle" letter-spacing="3" font-weight="600">LOCAL AI</text>
+  </g>
+
+</svg>

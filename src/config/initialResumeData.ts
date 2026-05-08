@@ -16,13 +16,13 @@ const initialGlobalSettings: GlobalSettings = {
 export const initialResumeState = {
   title: "新建简历",
   basic: {
-    name: "宋哈娜",
+    name: "梁福昇",
     title: "高级前端工程师",
     employementStatus: "离职",
-    email: "zhangsan@example.com",
-    phone: "13800138000",
-    location: "北京市朝阳区",
-    birthDate: "2025-01",
+    email: "xxx@xxx.com",
+    phone: "xxxxxxxxxxx",
+    location: "xxxxx",
+    birthDate: "xxxx-xx",
     fieldOrder: DEFAULT_FIELD_ORDER,
     icons: {
       email: "Mail",
@@ -36,7 +36,7 @@ export const initialResumeState = {
       {
         id: "personal",
         label: "个人网站",
-        value: "https://zhangsan.dev",
+        value: "https://xxx.xxx",
         icon: "Globe",
       },
     ],
@@ -173,12 +173,12 @@ export const initialResumeState = {
 export const initialResumeStateEn = {
   title: "New Resume",
   basic: {
-    name: "Dva",
+    name: "Liang Fusheng",
     title: "Senior Frontend Engineer",
     employementStatus: "Available",
-    email: "john.smith@123.com",
-    phone: "555-123-4567",
-    location: "San Francisco, CA",
+    email: "xxx@xxx.com",
+    phone: "xxxxxxxxxxx",
+    location: "xxxxx",
     birthDate: "",
     fieldOrder: DEFAULT_FIELD_ORDER,
     icons: {

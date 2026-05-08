@@ -438,7 +438,7 @@ const RichTextEditor = ({
   const t = useTranslations("richEditor");
   const initialContent = useMemo(
     () => normalizeEditorHtml(content),
-    []
+    [content]
   );
   const lastSyncedContentRef = React.useRef(initialContent);
   const [isEditorEmpty, setIsEditorEmpty] = React.useState(
@@ -527,13 +527,8 @@ const RichTextEditor = ({
     if (!editor) return;
 
     const normalizedContent = normalizeEditorHtml(content);
-    const normalizedEditorContent = normalizeEditorHtml(editor.getHTML());
 
-    if (
-      normalizedContent === lastSyncedContentRef.current ||
-      normalizedContent === normalizedEditorContent
-    ) {
-      lastSyncedContentRef.current = normalizedContent;
+    if (normalizedContent === lastSyncedContentRef.current) {
       setIsEditorEmpty(editor.isEmpty);
       return;
     }

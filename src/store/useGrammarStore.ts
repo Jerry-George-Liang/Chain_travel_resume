@@ -100,26 +100,46 @@ export const useGrammarStore = create<GrammarStore>((set, get) => ({
       openaiModelId,
       openaiApiEndpoint,
       geminiApiKey,
-      geminiModelId
+      geminiModelId,
+      xiaomiApiKey,
+      xiaomiModelId,
+      doubaoApiEndpoint,
+      deepseekApiEndpoint,
+      geminiApiEndpoint,
+      xiaomiApiEndpoint,
     } = useAIConfigStore.getState();
 
     const config = AI_MODEL_CONFIGS[selectedModel];
-    const apiKey =
-      selectedModel === "doubao"
-        ? doubaoApiKey
-        : selectedModel === "openai"
-          ? openaiApiKey
-          : selectedModel === "gemini"
-            ? geminiApiKey
-            : deepseekApiKey;
-    const modelId =
-      selectedModel === "doubao"
-        ? doubaoModelId
-        : selectedModel === "openai"
-          ? openaiModelId
-          : selectedModel === "gemini"
-            ? geminiModelId
-            : deepseekModelId;
+    const getApiKey = () => {
+      switch (selectedModel) {
+        case "doubao": return doubaoApiKey;
+        case "deepseek": return deepseekApiKey;
+        case "openai": return openaiApiKey;
+        case "gemini": return geminiApiKey;
+        case "xiaomi": return xiaomiApiKey;
+        default: return "";
+      }
+    };
+    const getModelId = () => {
+      switch (selectedModel) {
+        case "doubao": return doubaoModelId;
+        case "deepseek": return deepseekModelId;
+        case "openai": return openaiModelId;
+        case "gemini": return geminiModelId;
+        case "xiaomi": return xiaomiModelId;
+        default: return "";
+      }
+    };
+    const getApiEndpointValue = () => {
+      switch (selectedModel) {
+        case "doubao": return doubaoApiEndpoint;
+        case "deepseek": return deepseekApiEndpoint;
+        case "openai": return openaiApiEndpoint;
+        case "gemini": return geminiApiEndpoint;
+        case "xiaomi": return xiaomiApiEndpoint;
+        default: return "";
+      }
+    };
 
     set({ isChecking: true });
 
@@ -131,10 +151,10 @@ export const useGrammarStore = create<GrammarStore>((set, get) => ({
         },
         body: JSON.stringify({
           content: text,
-          apiKey,
-          model: config.requiresModelId ? modelId : config.defaultModel,
+          apiKey: getApiKey(),
+          model: config.requiresModelId ? getModelId() : config.defaultModel,
           modelType: selectedModel,
-          apiEndpoint: selectedModel === "openai" ? openaiApiEndpoint : undefined,
+          apiEndpoint: getApiEndpointValue() || undefined,
         }),
       });
 

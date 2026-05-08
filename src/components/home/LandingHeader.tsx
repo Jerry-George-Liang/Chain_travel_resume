@@ -25,28 +25,35 @@ export default function LandingHeader() {
         <div className="mx-auto max-w-[1200px] px-4">
           <div className="flex items-center justify-between h-20">
             <div
-              className="flex items-center  cursor-pointer group"
+              className="flex items-center cursor-pointer group"
               onClick={() => (window.location.href = `/${locale}/`)}
             >
-              <Logo size={60} />
-              <span className="font-serif text-[24px] tracking-tight font-semibold text-foreground/90">
+              <div className="relative">
+                <Logo size={60} />
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-400/20 to-orange-500/10 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              </div>
+              <span className="font-serif text-[24px] tracking-tight font-semibold text-foreground/90 ml-2 group-hover:text-foreground transition-colors">
                 {t("header.title")}
               </span>
             </div>
 
-            <div className="hidden md:flex items-center gap-4">
-              <LanguageSwitch />
-              <ThemeToggle>
-                <div className="w-9 h-9 relative cursor-pointer rounded-xl hover:bg-accent/80 flex items-center justify-center transition-colors">
-                  <Sun className="h-[1.1rem] w-[1.1rem] absolute inset-0 m-auto rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                  <Moon className="h-[1.1rem] w-[1.1rem] absolute inset-0 m-auto rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                </div>
-              </ThemeToggle>
+            <div className="hidden md:flex items-center gap-3">
+              <div className="flex items-center gap-1 p-1 rounded-xl bg-secondary/50 border border-border/30">
+                <LanguageSwitch />
+                <div className="w-px h-4 bg-border/40" />
+                <ThemeToggle>
+                  <div className="w-8 h-8 relative cursor-pointer rounded-lg hover:bg-accent/80 flex items-center justify-center transition-all duration-300">
+                    <Sun className="h-[1.05rem] w-[1.05rem] absolute inset-0 m-auto rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 text-amber-500" />
+                    <Moon className="h-[1.05rem] w-[1.05rem] absolute inset-0 m-auto rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 text-blue-400" />
+                  </div>
+                </ThemeToggle>
+              </div>
+
               <GitHubStars />
 
               <GoDashboard>
                 <Button
-                  className="rounded-xl px-6 h-10 font-medium transition-all hover:opacity-90 active:scale-95"
+                  className="rounded-xl px-6 h-10 font-medium transition-all duration-300 hover:opacity-90 active:scale-[0.97] shadow-md hover:shadow-lg shadow-primary/10"
                 >
                   {t("header.startButton")}
                 </Button>
@@ -54,7 +61,7 @@ export default function LandingHeader() {
             </div>
 
             <button
-              className="md:hidden p-2.5 hover:bg-accent rounded-xl transition-colors"
+              className="md:hidden p-2.5 hover:bg-accent rounded-xl transition-all duration-200 active:scale-95"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? (

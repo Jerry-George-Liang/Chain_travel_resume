@@ -64,6 +64,8 @@ export function UnifiedDateInput({
           labelPlacement="outside"
           shouldForceLeadingZeros
           isDisabled={isPresent}
+          label={label || ""}
+          aria-label={label || "date input"}
           className={cn(isPresent && "opacity-50")}
           classNames={{
             inputWrapper:

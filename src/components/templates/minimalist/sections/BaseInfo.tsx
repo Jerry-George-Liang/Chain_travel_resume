@@ -59,8 +59,8 @@ const BaseInfo = ({ basic = {} as BasicInfo, globalSettings, template }: BaseInf
     );
 
     const layoutStyles = {
-        left: { container: "flex items-center justify-between gap-6", leftContent: "flex items-center gap-6 flex-1 min-w-0", fields: "grid grid-cols-2 gap-x-8 gap-y-2 justify-start shrink-0", nameTitle: "text-left min-w-0" },
-        right: { container: "flex items-center justify-between gap-6 flex-row-reverse", leftContent: "flex justify-end items-center gap-6 flex-1 min-w-0", fields: "grid grid-cols-2 gap-x-8 gap-y-2 justify-start shrink-0", nameTitle: "text-right min-w-0" },
+        left: { container: "flex items-start gap-6", leftContent: "flex items-center gap-6 shrink-0", fields: "flex-1 flex flex-col gap-y-2", nameTitle: "text-left min-w-0" },
+        right: { container: "flex items-start gap-6 flex-row-reverse", leftContent: "flex justify-end items-center gap-6 shrink-0", fields: "flex-1 flex flex-col gap-y-2", nameTitle: "text-right min-w-0" },
         center: { container: "flex flex-col items-center gap-3", leftContent: "flex flex-col items-center gap-4", fields: "w-full flex justify-center items-center flex-wrap gap-3", nameTitle: "text-center min-w-0" },
     };
 
@@ -80,26 +80,27 @@ const BaseInfo = ({ basic = {} as BasicInfo, globalSettings, template }: BaseInf
                         )}
                     </div>
                 </div>
-                <motion.div layout="position" className={styles.fields} style={{ fontSize: `${globalSettings?.baseFontSize || 14}px`, color: "rgb(75, 85, 99)", maxWidth: layout === "center" ? "none" : "600px" }}>
+                <motion.div layout="position" className={styles.fields} style={{ fontSize: `${globalSettings?.baseFontSize || 14}px`, color: "rgb(75, 85, 99)" }}>
                     {allFields.map((item) => {
                         const customFieldHref = item.custom && "href" in item && typeof item.href === "string" ? item.href : null;
 
                         return (
-                        <motion.div key={item.key} className="flex items-center whitespace-nowrap overflow-hidden text-baseFont">
-                            {useIconMode ? (
-                                <div className="flex items-center gap-1">
-                                    {getIcon(item.icon)}
-                                    {item.key === "email" ? <a href={`mailto:${item.value}`} className="underline">{item.value}</a> : customFieldHref ? <a href={customFieldHref} target="_blank" rel="noopener noreferrer" className="underline truncate">{item.value}</a> : <span>{item.value}</span>}
-                                </div>
-                            ) : (
-                                <div className="flex items-center gap-2 overflow-hidden">
-                                    {!item.custom && <span>{t(`basicPanel.basicFields.${item.key}`)}:</span>}
-                                    {item.custom && shouldShowCustomFieldLabelPrefix(item) && <span>{item.label}:</span>}
-                                    {customFieldHref ? <a href={customFieldHref} target="_blank" rel="noopener noreferrer" className="truncate underline" suppressHydrationWarning>{item.value}</a> : <span className="truncate" suppressHydrationWarning>{item.value}</span>}
-                                </div>
-                            )}
-                        </motion.div>
-                    )})}
+                            <motion.div key={item.key} className="text-baseFont w-full">
+                                {useIconMode ? (
+                                    <div className="flex items-start gap-1">
+                                        <div className="shrink-0 mt-0.5">{getIcon(item.icon)}</div>
+                                        {item.key === "email" ? <a href={`mailto:${item.value}`} className="underline break-words">{item.value}</a> : customFieldHref ? <a href={customFieldHref} target="_blank" rel="noopener noreferrer" className="underline break-words">{item.value}</a> : <span className="break-words">{item.value}</span>}
+                                    </div>
+                                ) : (
+                                    <div className="flex items-start gap-2">
+                                        {!item.custom && <span className="shrink-0">{t(`basicPanel.basicFields.${item.key}`)}:</span>}
+                                        {item.custom && shouldShowCustomFieldLabelPrefix(item) && <span className="shrink-0">{item.label}:</span>}
+                                        {customFieldHref ? <a href={customFieldHref} target="_blank" rel="noopener noreferrer" className="underline break-words" suppressHydrationWarning>{item.value}</a> : <span className="break-words" suppressHydrationWarning>{item.value}</span>}
+                                    </div>
+                                )}
+                            </motion.div>
+                        )
+                    })}
                 </motion.div>
             </div>
             {basic.githubContributionsVisible && (

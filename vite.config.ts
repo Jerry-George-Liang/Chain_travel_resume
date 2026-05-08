@@ -6,6 +6,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 export default defineConfig({
   server: {
     port: 3010,
+    strictPort: true,
   },
   optimizeDeps: {
     exclude: ["pdfjs-dist"],

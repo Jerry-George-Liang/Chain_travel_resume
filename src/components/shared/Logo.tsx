@@ -14,8 +14,8 @@ const Logo: React.FC<LogoProps> = ({
 }) => {
   return (
     <Image
-      src="/logo.svg"
-      alt="Magic Resume Logo"
+      src="/logo.png"
+      alt="链途resume Logo"
       width={size}
       height={size}
       className={className}

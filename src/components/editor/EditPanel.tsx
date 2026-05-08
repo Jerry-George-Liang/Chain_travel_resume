@@ -1,5 +1,5 @@
 import React from "react";
-import { Pencil } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 import { motion } from "framer-motion";
 import { useResumeStore } from "@/store/useResumeStore";
 import { cn } from "@/lib/utils";
@@ -17,11 +17,34 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../ui/alert-dialog";
 
 export function EditPanel() {
-  const { activeResume, updateMenuSections } = useResumeStore();
+  const { activeResume, updateMenuSections, setActiveSection } = useResumeStore();
   if (!activeResume) return;
   const { activeSection = "", menuSections = [] } = activeResume || {};
+
+  const handleDeleteSection = () => {
+    if (activeSection === "basic") return;
+    const newSections = menuSections.filter((s) => s.id !== activeSection);
+    updateMenuSections(newSections);
+    const prevIndex = menuSections.findIndex((s) => s.id === activeSection) - 1;
+    if (prevIndex >= 0 && newSections[prevIndex]) {
+      setActiveSection(newSections[prevIndex].id);
+    } else if (newSections.length > 0) {
+      setActiveSection(newSections[0].id);
+    }
+  };
 
   const renderFields = () => {
     switch (activeSection) {
@@ -68,7 +91,6 @@ export function EditPanel() {
               {menuSections?.find((s) => s.id === activeSection)?.icon}
             </span>
 
-            {/* 如果是基本信息的展示话展示div */}
             {activeSection === "basic" ? (
               <div>
                 <span className="text-lg font-semibold text-primary">
@@ -109,6 +131,37 @@ export function EditPanel() {
                   </Tooltip>
                 </TooltipProvider>
               </>
+            )}
+
+            {activeSection !== "basic" && (
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    className="ml-auto p-1.5 rounded-md hover:bg-destructive/10 text-muted-foreground hover:text-destructive transition-colors"
+                  >
+                    <Trash2 size={16} />
+                  </motion.button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>删除板块</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      确定要删除「{menuSections?.find((s) => s.id === activeSection)?.title}」整个板块吗？此操作不可撤销。
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>取消</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={handleDeleteSection}
+                      className="bg-gradient-to-r from-rose-500 to-orange-400 hover:from-rose-600 hover:to-orange-500 text-white shadow-sm border-0"
+                    >
+                      确认删除
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
             )}
           </div>
         </motion.div>

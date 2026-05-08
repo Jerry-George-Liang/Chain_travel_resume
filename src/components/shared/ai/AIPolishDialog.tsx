@@ -63,6 +63,15 @@ export default function AIPolishDialog({
     openaiApiEndpoint,
     geminiApiKey,
     geminiModelId,
+    xiaomiApiKey,
+    xiaomiModelId,
+    doubaoApiEndpoint,
+    deepseekApiEndpoint,
+    geminiApiEndpoint,
+    xiaomiApiEndpoint,
+    customApiKey,
+    customModelId,
+    customApiEndpoint,
     isConfigured
   } = useAIConfigStore();
   const abortControllerRef = useRef<AbortController | null>(null);
@@ -124,22 +133,39 @@ export default function AIPolishDialog({
       abortControllerRef.current = new AbortController();
 
       const config = AI_MODEL_CONFIGS[selectedModel];
-      const apiKey =
-        selectedModel === "doubao"
-          ? doubaoApiKey
-          : selectedModel === "openai"
-            ? openaiApiKey
-            : selectedModel === "gemini"
-              ? geminiApiKey
-              : deepseekApiKey;
-      const modelId =
-        selectedModel === "doubao"
-          ? doubaoModelId
-          : selectedModel === "openai"
-            ? openaiModelId
-            : selectedModel === "gemini"
-              ? geminiModelId
-              : deepseekModelId;
+      const getApiKey = () => {
+        switch (selectedModel) {
+          case "doubao": return doubaoApiKey;
+          case "deepseek": return deepseekApiKey;
+          case "openai": return openaiApiKey;
+          case "gemini": return geminiApiKey;
+          case "xiaomi": return xiaomiApiKey;
+          case "custom": return customApiKey;
+          default: return "";
+        }
+      };
+      const getModelId = () => {
+        switch (selectedModel) {
+          case "doubao": return doubaoModelId;
+          case "deepseek": return deepseekModelId;
+          case "openai": return openaiModelId;
+          case "gemini": return geminiModelId;
+          case "xiaomi": return xiaomiModelId;
+          case "custom": return customModelId;
+          default: return "";
+        }
+      };
+      const getApiEndpointValue = () => {
+        switch (selectedModel) {
+          case "doubao": return doubaoApiEndpoint;
+          case "deepseek": return deepseekApiEndpoint;
+          case "openai": return openaiApiEndpoint;
+          case "gemini": return geminiApiEndpoint;
+          case "xiaomi": return xiaomiApiEndpoint;
+          case "custom": return customApiEndpoint;
+          default: return "";
+        }
+      };
 
       const response = await fetch("/api/polish", {
         method: "POST",
@@ -148,9 +174,9 @@ export default function AIPolishDialog({
         },
         body: JSON.stringify({
           content: turndownService.turndown(content),
-          apiKey,
-          apiEndpoint: selectedModel === "openai" ? openaiApiEndpoint : undefined,
-          model: config.requiresModelId ? modelId : config.defaultModel,
+          apiKey: getApiKey(),
+          apiEndpoint: getApiEndpointValue() || undefined,
+          model: config.requiresModelId ? getModelId() : config.defaultModel,
           modelType: selectedModel,
           customInstructions: customInstructions.trim() || undefined
         }),

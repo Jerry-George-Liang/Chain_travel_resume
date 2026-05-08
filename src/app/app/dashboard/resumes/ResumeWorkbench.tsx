@@ -25,7 +25,8 @@ import { AnimatedImportButton } from "./AnimatedImportButton";
 import {
     extractJsonContent,
     createResumeFromAIResult,
-    toStringArray
+    toStringArray,
+    mapExternalResumeJson
 } from "./utils";
 import pdfWorkerUrl from "pdfjs-dist/legacy/build/pdf.worker.min.mjs?url";
 
@@ -46,6 +47,20 @@ export const ResumeWorkbench = () => {
     const {
         geminiApiKey,
         geminiModelId,
+        geminiApiEndpoint,
+        selectedModel,
+        doubaoApiKey,
+        doubaoModelId,
+        doubaoApiEndpoint,
+        deepseekApiKey,
+        deepseekModelId,
+        deepseekApiEndpoint,
+        openaiApiKey,
+        openaiModelId,
+        openaiApiEndpoint,
+        xiaomiApiKey,
+        xiaomiModelId,
+        xiaomiApiEndpoint,
     } = useAIConfigStore();
     const router = useRouter();
     const [hasConfiguredFolder, setHasConfiguredFolder] = useState(false);
@@ -110,13 +125,46 @@ export const ResumeWorkbench = () => {
         const { generateUUID } = await import("@/utils/uuid");
         const { initialResumeState } = await import("@/config/initialResumeData");
 
+        const mappedData = mapExternalResumeJson(config);
+        console.log("[JSON Import] Raw keys:", Object.keys(config).join(", "));
+        console.log("[JSON Import] Detected format:", mappedData ? "mapped" : "fallback to raw");
+        console.log("[JSON Import] Mapped projects count:", mappedData?.projects?.length ?? 0);
+        console.log("[JSON Import] Mapped education count:", mappedData?.education?.length ?? 0);
+        console.log("[JSON Import] Mapped skills length:", mappedData?.skillContent?.length ?? 0);
+
+        if (mappedData?.projects) {
+            mappedData.projects.forEach((p: any, i: number) => {
+                console.log(`[JSON Import] Project[${i}]: name="${p.name}" role="${p.role}" date="${p.date}" descLen=${p.description?.length ?? 0} descPreview=${(p.description || "").substring(0, 80)}`);
+            });
+        }
+        if (mappedData?.education) {
+            mappedData.education.forEach((e: any, i: number) => {
+                console.log(`[JSON Import] Education[${i}]: school="${e.school}" major="${e.major}" degree="${e.degree}"`);
+            });
+        }
+
+        const finalData = mappedData || config;
         const newResume = {
             ...initialResumeState,
-            ...config,
+            ...finalData,
             id: generateUUID(),
             createdAt: now,
             updatedAt: now,
+            templateId: DEFAULT_TEMPLATES[0]?.id,
+            menuSections: (finalData.menuSections && Array.isArray(finalData.menuSections) && finalData.menuSections.length > 0)
+                ? finalData.menuSections
+                : initialResumeState.menuSections,
+            globalSettings: {
+                ...initialResumeState.globalSettings,
+                ...(finalData.globalSettings ?? {}),
+            },
         };
+        console.log("[JSON Import] Final resume projects count:", newResume.projects?.length ?? 0);
+        console.log("[JSON Import] Final resume education count:", newResume.education?.length ?? 0);
+        console.log("[JSON Import] Final resume skillContent length:", newResume.skillContent?.length ?? 0);
+        console.log("[JSON Import] Final resume skillContent preview:", (newResume.skillContent || "").substring(0, 100));
+        console.log("[JSON Import] Final resume menuSections skills enabled:", newResume.menuSections?.find((s: any) => s.id === "skills")?.enabled);
+
         const resumeId = addResume(newResume);
         setActiveResume(resumeId);
         setIsImportDialogOpen(false);
@@ -168,9 +216,26 @@ export const ResumeWorkbench = () => {
         return pageImages;
     };
 
+    const getAIConfig = () => {
+        switch (selectedModel) {
+            case "doubao":
+                return { apiKey: doubaoApiKey, model: doubaoModelId, modelType: "doubao" as const, apiEndpoint: doubaoApiEndpoint };
+            case "deepseek":
+                return { apiKey: deepseekApiKey, model: deepseekModelId || "deepseek-chat", modelType: "deepseek" as const, apiEndpoint: deepseekApiEndpoint };
+            case "openai":
+                return { apiKey: openaiApiKey, model: openaiModelId, modelType: "openai" as const, apiEndpoint: openaiApiEndpoint };
+            case "xiaomi":
+                return { apiKey: xiaomiApiKey, model: xiaomiModelId || "mimo-v2-omni", modelType: "xiaomi" as const, apiEndpoint: xiaomiApiEndpoint };
+            case "gemini":
+            default:
+                return { apiKey: geminiApiKey, model: geminiModelId || "gemini-flash-latest", modelType: "gemini" as const, apiEndpoint: geminiApiEndpoint };
+        }
+    };
+
     const importResumeFromPdf = async (file: File) => {
-        if (!geminiApiKey || !geminiModelId) {
-            toast.error(t("dashboard.resumes.importDialog.geminiConfigRequired"));
+        const aiConfig = getAIConfig();
+        if (!aiConfig.apiKey || (aiConfig.modelType !== "deepseek" && !aiConfig.model)) {
+            toast.error(t("dashboard.resumes.importDialog.aiConfigRequired"));
             router.push("/app/dashboard/ai");
             return;
         }
@@ -187,25 +252,44 @@ export const ResumeWorkbench = () => {
             },
             body: JSON.stringify({
                 images: pdfImages,
-                apiKey: geminiApiKey,
-                model: geminiModelId,
+                ...aiConfig,
                 locale,
             }),
         });
 
         const data = await response.json();
         if (!response.ok) {
+            if (data?.code === "MODEL_NOT_SUPPORT_IMAGES") {
+                toast.error(t("dashboard.resumes.importDialog.modelNotSupportImages"));
+                router.push("/app/dashboard/ai");
+                return;
+            }
+
             const message = data?.details
                 ? `${data?.error || "Resume import failed"}\n${data.details}`
                 : data?.error || "Resume import failed";
             throw new Error(message);
         }
 
-        const aiResume = data?.resume
-            ? data.resume
-            : data?.choices?.[0]?.message?.content
-                ? extractJsonContent(data.choices[0].message.content)
-                : null;
+        let aiResume: any = null;
+
+        if (data?.resume) {
+            aiResume = data.resume;
+        } else if (data?.choices?.[0]?.message?.content) {
+            const content = data.choices[0].message.content;
+            if (typeof content === "string" && content.trim()) {
+                try {
+                    aiResume = extractJsonContent(content);
+                } catch (parseError) {
+                    console.error("[PDF Import] Failed to parse AI response:", parseError);
+                    console.error("[PDF Import] Raw content:", content.substring(0, 500));
+                    throw new Error("AI returned invalid JSON format. Please try again or use a different model.");
+                }
+            }
+        } else {
+            console.error("[PDF Import] Unexpected API response:", JSON.stringify(data).substring(0, 300));
+            throw new Error("Invalid AI response format");
+        }
 
         if (!aiResume) {
             throw new Error("Invalid AI response");
@@ -425,6 +509,8 @@ export const ResumeWorkbench = () => {
                     pdfFileInputRef={pdfFileInputRef}
                     onJsonFileChange={handleJsonFileChange}
                     onPdfFileChange={handlePdfFileChange}
+                    currentModelType={selectedModel}
+                    locale={locale}
                 />
             </motion.div>
         </ScrollArea>

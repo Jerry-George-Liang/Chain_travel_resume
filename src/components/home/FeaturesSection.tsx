@@ -2,16 +2,18 @@
 import { useTranslations } from "@/i18n/compat/client";
 import Image from "@/lib/image";
 import { useState, useEffect, useRef, useCallback } from "react";
-import { ChevronRight, Sparkles, Shield, Zap } from "lucide-react";
+import { ChevronRight, Sparkles, Shield, Zap, ArrowRight } from "lucide-react";
 import AnimatedFeature from "./client/AnimatedFeature";
 
 const features = [
   {
     icon: Sparkles,
     badge: "features.ai.badge",
-    badgeColor: "bg-primary/10 text-primary",
+    badgeColor: "bg-gradient-to-r from-violet-500/10 to-purple-500/10 text-violet-600 dark:text-violet-400 border border-violet-500/20",
     title: "features.ai.title",
     description: "features.ai.description",
+    gradientFrom: "from-violet-500/8",
+    gradientTo: "to-purple-500/5",
     items: [
       {
         title: "features.ai.item1",
@@ -28,9 +30,11 @@ const features = [
   {
     icon: Shield,
     badge: "features.storage.badge",
-    badgeColor: "bg-emerald-500/10 text-emerald-600",
+    badgeColor: "bg-gradient-to-r from-emerald-500/10 to-teal-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20",
     title: "features.storage.title",
     description: "features.storage.description",
+    gradientFrom: "from-emerald-500/8",
+    gradientTo: "to-teal-500/5",
     items: [
       {
         title: "features.storage.item1",
@@ -41,6 +45,11 @@ const features = [
         title: "features.storage.item2",
         description: "features.storage.item2_description",
         image: "/features/svg/export-formats.svg",
+      },
+      {
+        title: "features.storage.item3",
+        description: "features.storage.item3_description",
+        image: "/features/svg/local-ai.svg",
       },
     ],
   },
@@ -70,7 +79,6 @@ export default function FeaturesSection() {
       intervalRefs.current[categoryIndex] = setInterval(() => {
         setProgresses((prev) => {
           const newProgresses = [...prev];
-          // Allow progress to go slightly over 100, handled by effect
           if (newProgresses[categoryIndex] < 100) {
             newProgresses[categoryIndex] += progressIncrement;
           }
@@ -81,18 +89,15 @@ export default function FeaturesSection() {
     []
   );
 
-  // Handle auto-switch when progress reaches 100%
   useEffect(() => {
     progresses.forEach((progress, index) => {
       if (progress >= 100) {
-        // Reset progress immediately to prevent repeated triggers
         setProgresses((prev) => {
           const next = [...prev];
           next[index] = 0;
           return next;
         });
-        
-        // Switch to next feature
+
         setActiveFeatures((prevActive) => {
           const next = [...prevActive];
           const max = features[index].items.length - 1;
@@ -127,37 +132,49 @@ export default function FeaturesSection() {
   };
 
   return (
-    <section className="py-24 md:py-40 bg-background overflow-hidden">
-      <div className="container mx-auto px-6 max-w-6xl">
+    <section className="py-28 md:py-44 bg-background relative overflow-hidden">
+      {/* Subtle background decoration */}
+      <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
+        <div className="absolute top-[20%] left-[-10%] w-[500px] h-[500px] bg-gradient-to-br from-amber-500/[0.03] to-transparent rounded-full blur-[120px]" />
+        <div className="absolute bottom-[20%] right-[-10%] w-[400px] h-[400px] bg-gradient-to-tl from-blue-500/[0.03] to-transparent rounded-full blur-[100px]" />
+      </div>
+
+      <div className="container mx-auto px-6 max-w-6xl relative z-10">
         <AnimatedFeature>
-          <div className="text-center mb-24 md:mb-32">
-            <h2 className="text-4xl md:text-5xl font-serif font-semibold tracking-tight text-foreground/90 mb-6">
+          <div className="text-center mb-24 md:mb-36">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif font-semibold tracking-tight text-foreground/90 mb-6">
               {t("features.title")}
             </h2>
-            <div className="w-20 h-1 bg-primary/20 mx-auto rounded-full mb-8" />
+            <div className="flex items-center justify-center gap-3 mb-8">
+              <div className="w-12 h-px bg-gradient-to-r from-transparent to-primary/30" />
+              <div className="w-2 h-2 rounded-full bg-primary/30" />
+              <div className="w-16 h-0.5 bg-gradient-to-r from-primary/30 via-primary/20 to-primary/30 rounded-full" />
+              <div className="w-2 h-2 rounded-full bg-primary/30" />
+              <div className="w-12 h-px bg-gradient-to-l from-transparent to-primary/30" />
+            </div>
             <p className="text-xl text-muted-foreground/80 max-w-2xl mx-auto font-light leading-relaxed">
               {t("features.subtitle")}
             </p>
           </div>
         </AnimatedFeature>
 
-        <div className="space-y-40">
+        <div className="space-y-48 md:space-y-56">
           {features.map((category, catIndex) => (
-            <div 
-              key={catIndex} 
-              className={`flex flex-col gap-16 lg:gap-24 items-center ${
+            <div
+              key={catIndex}
+              className={`flex flex-col gap-16 lg:gap-28 items-center ${
                 catIndex % 2 === 1 ? "lg:flex-row-reverse" : "lg:flex-row"
               }`}
             >
               {/* Text Side */}
               <div className="w-full lg:w-5/12 space-y-10">
                 <AnimatedFeature delay={0.1}>
-                  <div className="space-y-6">
-                    <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-lg text-sm font-medium ${category.badgeColor}`}>
+                  <div className="space-y-7">
+                    <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-xl text-sm font-semibold ${category.badgeColor} backdrop-blur-sm`}>
                       <category.icon className="w-4 h-4" />
                       {t(category.badge)}
                     </div>
-                    <h3 className="text-3xl md:text-4xl font-serif font-medium tracking-tight text-foreground/90">
+                    <h3 className="text-3xl md:text-4xl font-serif font-medium tracking-tight text-foreground/90 leading-tight">
                       {t(category.title)}
                     </h3>
                     <p className="text-lg text-muted-foreground/90 leading-relaxed font-light">
@@ -166,38 +183,38 @@ export default function FeaturesSection() {
                   </div>
                 </AnimatedFeature>
 
-                <div className="space-y-4">
+                <div className="space-y-3">
                   {category.items.map((item, itemIndex) => (
                     <button
                       key={itemIndex}
                       onClick={() => handleSlideChange(catIndex, itemIndex)}
-                      className={`w-full text-left group p-5 rounded-2xl transition-all relative border overflow-hidden ${
+                      className={`w-full text-left group p-5 rounded-2xl transition-all duration-300 relative border ${
                         activeFeatures[catIndex] === itemIndex
-                          ? "bg-secondary border-border shadow-sm"
-                          : "bg-transparent border-transparent hover:bg-secondary/40"
+                          ? "bg-secondary/80 border-border/60 shadow-lg shadow-primary/[0.04]"
+                          : "bg-transparent border-border/20 hover:bg-secondary/40 hover:border-border/40"
                       }`}
                     >
-                      {/* Progress Bar */}
+                      {/* Progress Bar - more refined */}
                       {activeFeatures[catIndex] === itemIndex && (
-                        <div 
-                          className="absolute bottom-0 left-0 h-0.5 bg-primary/30 transition-all duration-75 ease-linear"
+                        <div
+                          className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-primary/50 via-primary/70 to-primary/50 transition-all duration-75 ease-linear rounded-full"
                           style={{ width: `${progresses[catIndex]}%` }}
                         />
                       )}
-                      
+
                       <div className="flex items-start justify-between">
-                        <div className="space-y-1">
-                          <h4 className={`font-semibold transition-colors ${
-                            activeFeatures[catIndex] === itemIndex ? "text-primary" : "text-foreground/70"
+                        <div className="space-y-1.5 flex-1">
+                          <h4 className={`font-semibold transition-all duration-300 ${
+                            activeFeatures[catIndex] === itemIndex ? "text-foreground" : "text-foreground/60"
                           }`}>
                             {t(item.title)}
                           </h4>
-                          <p className="text-sm text-muted-foreground line-clamp-1">
+                          <p className="text-sm text-muted-foreground line-clamp-1 leading-relaxed">
                             {t(item.description)}
                           </p>
                         </div>
-                        <ChevronRight className={`w-5 h-5 transition-all ${
-                          activeFeatures[catIndex] === itemIndex ? "text-primary translate-x-1" : "text-muted-foreground/30"
+                        <ChevronRight className={`w-5 h-5 transition-all duration-300 flex-shrink-0 ml-3 mt-0.5 ${
+                          activeFeatures[catIndex] === itemIndex ? "text-primary translate-x-0.5 opacity-100" : "text-muted-foreground/25 opacity-50"
                         }`} />
                       </div>
                     </button>
@@ -208,17 +225,25 @@ export default function FeaturesSection() {
               {/* Image Side */}
               <div className="w-full lg:w-7/12">
                 <AnimatedFeature key={`${catIndex}-${activeFeatures[catIndex]}`} delay={0.2}>
-                  <div className="relative aspect-[16/10] bg-secondary/20 rounded-3xl border border-border/50 p-6 sm:p-10 shadow-2xl backdrop-blur-sm group overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-tr from-primary/5 to-transparent pointer-events-none" />
-                    <div className="relative w-full h-full transform group-hover:scale-[1.02] transition-transform duration-700">
+                  <div className={`relative aspect-[16/10] rounded-3xl border border-border/40 p-6 sm:p-10 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.08)] backdrop-blur-sm group overflow-hidden bg-gradient-to-br ${category.gradientFrom} ${category.gradientTo}`}>
+                    {/* Subtle inner glow */}
+                    <div className="absolute inset-0 bg-gradient-to-tr from-white/[0.03] to-transparent pointer-events-none" />
+
+                    {/* Corner accent */}
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary/[0.02] to-transparent rounded-bl-full" />
+
+                    <div className="relative w-full h-full transform group-hover:scale-[1.01] transition-transform duration-700 ease-out">
                       <Image
                         src={category.items[activeFeatures[catIndex]].image}
                         alt={t(category.items[activeFeatures[catIndex]].title)}
                         fill
-                        className="object-contain"
+                        className="object-contain drop-shadow-sm"
                         sizes="(max-width: 1024px) 100vw, 40vw"
                       />
                     </div>
+
+                    {/* Bottom reflection */}
+                    <div className="absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t from-foreground/[0.015] to-transparent rounded-b-3xl pointer-events-none" />
                   </div>
                 </AnimatedFeature>
               </div>
