@@ -112,36 +112,29 @@ Whether you're a fresh graduate or an experienced professional, 链途Resume mak
 ```
 liantu-resume/
 ├── src/
-│   ├── app/                    # Page components (TanStack Router)
-│   │   ├── (public)/           # Public pages
-│   │   └── api/                # API routes
-│   ├── components/             # Component library
-│   │   ├── templates/          # 8 resume templates
-│   │   ├── editor/             # Editor panel components
-│   │   ├── preview/            # Preview components
-│   │   └── ui/                 # Base UI components
-│   ├── config/                 # Configuration files
-│   │   ├── ai.ts               # AI model configuration
-│   │   └── constants.ts        # Constants definition
-│   ├── store/                  # Zustand state management
-│   │   └── useResumeStore.ts   # Resume data store
-│   ├── types/                  # TypeScript types
-│   │   ├── resume.ts           # Resume data types
-│   │   └── template.ts         # Template config types
-│   ├── routes/                 # Route definitions
-│   ├── hooks/                  # Custom hooks
-│   ├── lib/                    # Utility libraries
-│   ├── i18n/                   # Internationalization
-│   └── utils/                  # Utility functions
-├── public/                     # Static assets
-│   ├── fonts/                  # Font files
-│   └── template-snapshots/    # Template previews
-├── scripts/                    # Build scripts
-├── Dockerfile                  # Docker configuration
-├── docker-compose.yml          # Docker Compose
-├── vite.config.ts              # Vite configuration
-├── tailwind.config.ts          # Tailwind CSS config
-└── package.json                # Dependencies
+│   ├── app/
+│   │   ├── (public)/
+│   │   └── api/
+│   ├── components/
+│   │   ├── templates/
+│   │   ├── editor/
+│   │   ├── preview/
+│   │   └── ui/
+│   ├── config/
+│   ├── store/
+│   ├── types/
+│   ├── routes/
+│   ├── hooks/
+│   ├── lib/
+│   ├── i18n/
+│   └── utils/
+├── public/
+├── scripts/
+├── Dockerfile
+├── docker-compose.yml
+├── vite.config.ts
+├── tailwind.config.ts
+└── package.json
 ```
 
 ---
@@ -149,7 +142,6 @@ liantu-resume/
 ## 🚀 Quick Start
 
 ### Prerequisites
-
 - **Node.js**: >= 18.0.0 (recommended: 20.x LTS)
 - **pnpm**: >= 8.0.0 (recommended: 10.3.0)
 - **Git**: Latest version
@@ -157,18 +149,13 @@ liantu-resume/
 ### Installation
 
 ```bash
-# Clone the repository
 git clone https://github.com/Jerry-George-Liang/Chain_travel_resume.git
 cd Chain_travel_resume
-
-# Install dependencies
 pnpm install
-
-# Start development server
 pnpm dev
 ```
 
-Access the application at [http://localhost:3010](http://localhost:3010).
+Access at [http://localhost:3010](http://localhost:3010).
 
 ### Available Scripts
 
@@ -177,83 +164,33 @@ Access the application at [http://localhost:3010](http://localhost:3010).
 | `pnpm dev` | Start development server (port 3010) |
 | `pnpm build` | Build for production |
 | `pnpm start` | Start production server |
-| `pnpm preview` | Preview production build |
-| `pnpm release` | Release new version (automated) |
 
 ---
 
 ## 🐳 Docker Deployment
 
-### Using Docker Compose (Recommended)
-
 ```bash
 docker compose up -d
-```
-
-The application will be available at http://localhost:3010.
-
-### Manual Build
-
-```bash
+# or
 docker build -t liantu-resume .
 docker run -d -p 3010:3010 --name liantu-resume liantu-resume
 ```
 
 ---
 
-## 🗺️ Roadmap
-
-### Completed ✅
-- [x] Basic resume editing functionality
-- [x] 8 professional templates
-- [x] AI-powered writing assistance (6 providers)
-- [x] PDF export and print
-- [x] Multi-language support (zh/en)
-- [x] Dark mode
-- [x] Auto-save mechanism
-- [x] Grammar check feature
-- [x] File import (PDF/Markdown)
-
-### In Progress 🚧
-- [ ] Team collaboration features
-- [ ] More AI optimization options
-- [ ] Resume analytics dashboard
-- [ ] Cloud storage integration
-
-### Planned 🔮
-- [ ] Mobile app version
-- [ ] ATS compatibility scoring
-- [ ] Cover letter generator
-- [ ] Interview preparation module
-
----
-
 ## ⚖️ License & Commercial Use
 
-This project is licensed under **Apache License 2.0**.
+**Apache License 2.0**
 
-### Personal Use ✅
-- Free for personal, non-commercial use
-- Open source code available
-- Community support
-
-### Commercial Restrictions ⚠️
-**Prohibited without authorization:**
-- Using as SaaS/PaaS service
-- Embedding in commercial products
-- Redistributing modified versions commercially
-
-For commercial licensing inquiries, please contact the project maintainer.
+✅ Personal use: Free  
+⚠️ Commercial use: Requires authorization
 
 ---
 
-## 📞 Contact & Community
+## 📞 Contact
 
-| Channel | Link |
-|---------|------|
-| **GitHub Issues** | [Report Bugs](https://github.com/Jerry-George-Liang/Chain_travel_resume/issues) |
-| **Discord** | [Join Community](https://discord.gg/your-invite-link) |
-| **Email** | contact@example.com |
+- **GitHub Issues**: [Report Bugs](https://github.com/Jerry-George-Liang/Chain_travel_resume/issues)
+- **Email**: contact@example.com
 
 ### Star History
 
@@ -261,20 +198,6 @@ For commercial licensing inquiries, please contact the project maintainer.
 
 ---
 
-## 🤝 Contributing
-
-We welcome contributions! Please follow these steps:
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-Please read our [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
-
----
-
 <p align="center">
-  <b> Made with ❤️ by 链途Resume Team | Powered by AI </b>
+  <b>Made with ❤️ by 链途Resume Team</b>
 </p>
