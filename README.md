@@ -21,16 +21,6 @@ Built on **TanStack Start** (React 18 + TypeScript + Vite 7), integrated with **
 
 Whether you're a fresh graduate or an experienced professional, 链途Resume makes resume creation simple and efficient, helping you stand out in the competitive job market.
 
----
-
-## 📸 Screenshots
-
-<div align="center">
-<img width="1920" height="1440" alt="链途Resume Main Interface" src="https://github.com/user-attachments/assets/4667e49a-7bf2-4379-9390-725e42799dc7" />
-</div>
-
----
-
 ## ✨ Key Features
 
 ### 🤖 AI-Powered Writing Assistance
