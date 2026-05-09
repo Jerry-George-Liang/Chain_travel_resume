@@ -1,12 +1,12 @@
 {
-  "name": "magic-resume",
+  "name": "liantu-resume",
   "version": "2.0.5",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@10.3.0",
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build",
+    "build": "npx @tanstack/router-cli generate && vite build",
     "start": "node server.mjs",
     "preview": "vite preview",
     "release": "bumpp",
@@ -85,6 +85,7 @@
     "zustand": "^4.5.4"
   },
   "devDependencies": {
+    "@tanstack/router-cli": "^1.166.43",
     "@types/lodash": "^4.17.13",
     "@types/node": "^20",
     "@types/react": "^18",

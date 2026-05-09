@@ -1,7 +1,11 @@
-name = "magic-resume"
+name = "liantu-resume"
 main = "dist/server/server.js"
 compatibility_date = "2025-12-01"
 compatibility_flags = ["nodejs_compat"]
 
 [assets]
 directory = "dist/client"
+
+[build]
+command = "node scripts/build.cjs"
+watch_dir = "src"
